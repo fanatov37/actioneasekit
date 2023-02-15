@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Base\Service;
+namespace StreakSymfony\Base\Service;
 
-use App\Base\Exception\App404Exception;
-use App\Base\Exception\CurlResponseException;
+use StreakSymfony\Base\Exception\App404Exception;
+use StreakSymfony\Base\Exception\CurlResponseException;
 
 class CurlService
 {

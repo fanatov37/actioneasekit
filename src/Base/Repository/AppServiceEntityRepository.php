@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Repository;
+namespace StreakSymfony\Base\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

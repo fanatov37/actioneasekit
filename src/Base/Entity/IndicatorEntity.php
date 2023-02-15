@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Entity;
+namespace StreakSymfony\Base\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 /**

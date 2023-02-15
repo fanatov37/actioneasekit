@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Base\Command;
+namespace StreakSymfony\Base\Command;
 
-use App\Kernel;
+use StreakSymfony\Kernel;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

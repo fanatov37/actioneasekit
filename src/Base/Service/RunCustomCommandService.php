@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Service;
+namespace StreakSymfony\Base\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Exception;
+namespace StreakSymfony\Base\Exception;
 
 /**
  * @codeCoverageIgnore

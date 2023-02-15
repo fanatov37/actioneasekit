@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Traits;
+namespace StreakSymfony\Base\Traits;
 
 /** @codeCoverageIgnore  */
 trait ReflectionHelperTrait

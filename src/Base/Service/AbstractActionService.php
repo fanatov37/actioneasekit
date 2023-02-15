@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Base\Service;
+namespace StreakSymfony\Base\Service;
 
-use App\Base\Traits\ClassNameTrait;
+use StreakSymfony\Base\Traits\ClassNameTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractActionService implements IActionService

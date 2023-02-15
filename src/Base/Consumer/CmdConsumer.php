@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Base\Consumer;
+namespace StreakSymfony\Base\Consumer;
 
-use App\Base\Service\RunCustomCommandService;
+use StreakSymfony\Base\Service\RunCustomCommandService;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 

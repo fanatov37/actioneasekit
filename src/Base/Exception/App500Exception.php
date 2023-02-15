@@ -1,5 +1,5 @@
 <?php
-namespace App\Base\Exception;
+namespace StreakSymfony\Base\Exception;
 /*
  * 500 Internal Server Error
  * A generic error message, given when an unexpected condition

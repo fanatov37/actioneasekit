@@ -1,5 +1,5 @@
 <?php
-namespace App\Base\Exception;
+namespace StreakSymfony\Base\Exception;
 /**
  * 400 Bad Request
  * The server cannot or will not process the request due to an apparent

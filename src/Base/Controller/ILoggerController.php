@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Controller;
+namespace StreakSymfony\Base\Controller;
 
 use Psr\Log\LoggerInterface;
 
