@@ -4,12 +4,16 @@ namespace StreakSymfony\Base\Service;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-abstract class AbstracRoletActionService implements IRoleIAction
+abstract class AbstracRoletActionService extends AbstractActionService implements IRoleIAction
 {
     protected ?UserInterface $user;
 
+    abstract function initUser(string $actionMethodName);
+
     public function checkRoleAccessToAction(string $actionMethodName) : bool
     {
+        $this->initUser($actionMethodName);
+
         $accessToAction = false;
 
         if (!$this->getAccessToActionsByRoles()) {

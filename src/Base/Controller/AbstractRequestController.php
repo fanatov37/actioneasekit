@@ -9,7 +9,6 @@ use StreakSymfony\Base\Service\ValidationInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -66,8 +65,10 @@ class AbstractRequestController extends AbstractFOSRestController
 
             return new JsonResponse($responseData);
 
-        } catch (MissingOptionsException $exception){
-            return new JsonResponse(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        } catch (MissingOptionsException $exception) {
+            throw new App404Exception($exception->getMessage());
+        } catch (\Throwable $exception) {
+            throw new App404Exception($exception->getMessage());
         }
     }
 
