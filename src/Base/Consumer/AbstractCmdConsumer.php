@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Consumer;
+namespace StreakSymfony\Base\Consumer;
 
-use App\Exception\DelayedException;
 use Enqueue\AmqpTools\RabbitMqDlxDelayStrategy;
 use Enqueue\Client\CommandSubscriberInterface;
 use Interop\Queue\Message;
@@ -10,6 +9,7 @@ use Interop\Queue\Context;
 use Interop\Queue\Processor;
 use Enqueue\Util\JSON;
 use Psr\Log\LoggerInterface;
+use StreakSymfony\Base\Exception\DelayedException;
 use StreakSymfony\Base\Service\RunCustomCommandService;
 use StreakSymfony\Base\Traits\ClassNameTrait;
 

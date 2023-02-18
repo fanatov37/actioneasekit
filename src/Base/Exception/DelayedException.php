@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exception;
+namespace StreakSymfony\Base\Exception;
 
 class DelayedException extends \Exception
 {

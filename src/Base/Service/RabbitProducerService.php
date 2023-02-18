@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Service;
+namespace StreakSymfony\Base\Service;
 
 use Enqueue\Client\ProducerInterface;
 use Psr\Log\LoggerInterface;
