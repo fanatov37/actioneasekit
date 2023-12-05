@@ -10,12 +10,13 @@ class DelayedException extends \Exception
     const DELAY_1_MIN = self::MIN1_IN_SEC;
 
     public function __construct(
+        string $message = "",
         public ?string $queueDelayed = null,
         public int $delay = self::DELAY_5_MIN,
         public array $messageData=[]
 
     )
     {
-        parent::__construct("Send to delayed=>{$this->queueDelayed} | {$this->delay}");
+        parent::__construct($message ?? "Send to delayed=>{$this->queueDelayed} | {$this->delay}");
     }
 }

@@ -17,7 +17,7 @@ abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterf
 {
     use ClassNameTrait;
 
-    public const AVAILABLE_PRODUCERS = [];
+    public const AVAILABLE_PRODUCERS = ['default'];
 
     public function __construct(
         private RunCustomCommandService $runCustomCommandService,
@@ -29,7 +29,7 @@ abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterf
      *  return self::REJECT; // when the message is broken
      *  return self::REQUEUE; // the message is fine but you want to postpone processing
      */
-    public function process(Message $message, Context $session)
+    public function process(Message $message, Context $context)
     {
         try {
             $body = JSON::decode($message->getBody());
@@ -45,13 +45,15 @@ abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterf
         } catch (DelayedException $exception) {
             $queueName = $exception->queueDelayed ?? $message->getRoutingKey();
 
-            $queue = $session->createQueue($queueName);
+            $queue = $context->createQueue($queueName);
 
             if ($exception->messageData) {
-                $message->setBody(JSON::encode($exception->messageData));
+                $body = JSON::decode($message->getBody());
+                $body = array_merge($body, $exception->messageData);
+                $message->setBody(JSON::encode($body));
             }
 
-            $producer = $session->createProducer();
+            $producer = $context->createProducer();
             $producer->setDelayStrategy(new RabbitMqDlxDelayStrategy())
                      ->setDeliveryDelay($exception->delay)
                      ->send($queue, $message);
