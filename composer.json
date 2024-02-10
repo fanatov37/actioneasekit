@@ -1,7 +1,23 @@
 {
     "name": "fanatov37/actioneasekit",
     "type": "project",
-    "license": "proprietary",
+    "description": "Stored Programs and Views in MySql for ZF2 or ZF3",
+    "keywords": [
+        "actioneasekit",
+        "fanatov37",
+        "symfony",
+        "symfony action ease kit",
+        "symfony ease"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vlad Fanatov",
+            "email": "fan.oldschool@gmail.com",
+            "homepage": "https://www.linkedin.com/in/fan37/"
+        }
+    ],
+
     "require": {
         "php": "^8.1",
         "ext-curl": "*",
@@ -9,8 +25,6 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "binsoul/net-mqtt-client-react": "0.7.3",
-        "boldtrn/jsonb-bundle": "^1.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.6",
         "doctrine/orm": "^2.12",
@@ -19,7 +33,7 @@
         "jms/serializer-bundle": "^5.3",
         "lazyjsonmapper/lazyjsonmapper": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
-        "psr/log": "^1.0",
+        "psr/log": "^2.0",
         "enqueue/amqp-lib": "^0.10.9",
         "enqueue/enqueue-bundle": "^0.10.16",
         "enqueue/fs": "^0.10.16",
@@ -59,7 +73,6 @@
     },
 
     "replace": {
-        "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
