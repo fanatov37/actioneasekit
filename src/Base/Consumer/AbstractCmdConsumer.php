@@ -72,13 +72,13 @@ abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterf
     {
         $commands = [];
 
-        foreach (self::AVAILABLE_PRODUCERS as $producer) {
+        foreach (static::AVAILABLE_PRODUCERS as $producer) {
             $commands [] = [
                 'command' => $producer,
                 'queue' => $producer,
 
-                'processor' => self::class,
-                'processorName' => self::class,
+                'processor' => static::class,
+                'processorName' => static::class,
 
                 'prefix_queue' => false,
                 'exclusive' => true,
