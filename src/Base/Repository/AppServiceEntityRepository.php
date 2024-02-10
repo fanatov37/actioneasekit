@@ -1,6 +1,6 @@
 <?php
 
-namespace StreakSymfony\Base\Repository;
+namespace ActionEaseKit\Base\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

@@ -1,5 +1,5 @@
 <?php
-namespace StreakSymfony\Base\Exception;
+namespace ActionEaseKit\Base\Exception;
 /*
  * 401 Unauthorized (RFC 7235)
  * Similar to 403 Forbidden, but specifically for use when authentication is

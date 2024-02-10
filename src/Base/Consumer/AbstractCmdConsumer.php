@@ -1,6 +1,6 @@
 <?php
 
-namespace StreakSymfony\Base\Consumer;
+namespace ActionEaseKit\Base\Consumer;
 
 use Enqueue\AmqpTools\RabbitMqDlxDelayStrategy;
 use Enqueue\Client\CommandSubscriberInterface;
@@ -9,9 +9,9 @@ use Interop\Queue\Context;
 use Interop\Queue\Processor;
 use Enqueue\Util\JSON;
 use Psr\Log\LoggerInterface;
-use StreakSymfony\Base\Exception\DelayedException;
-use StreakSymfony\Base\Service\RunCustomCommandService;
-use StreakSymfony\Base\Traits\ClassNameTrait;
+use ActionEaseKit\Base\Exception\DelayedException;
+use ActionEaseKit\Base\Service\RunCustomCommandService;
+use ActionEaseKit\Base\Traits\ClassNameTrait;
 
 abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterface
 {

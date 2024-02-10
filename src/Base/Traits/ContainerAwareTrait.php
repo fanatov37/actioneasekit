@@ -1,6 +1,6 @@
 <?php
 
-namespace StreakSymfony\Base\Traits;
+namespace ActionEaseKit\Base\Traits;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;

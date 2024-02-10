@@ -1,11 +1,11 @@
 <?php
 
-namespace StreakSymfony\Base\Controller;
+namespace ActionEaseKit\Base\Controller;
 
-use StreakSymfony\Base\Exception\App404Exception;
-use StreakSymfony\Base\Service\IActionService;
-use StreakSymfony\Base\Service\IRoleIAction;
-use StreakSymfony\Base\Service\ValidationInterface;
+use ActionEaseKit\Base\Exception\App404Exception;
+use ActionEaseKit\Base\Service\IActionService;
+use ActionEaseKit\Base\Service\IRoleIAction;
+use ActionEaseKit\Base\Service\ValidationInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,10 +1,10 @@
 <?php
 
-namespace StreakSymfony\Base\Service;
+namespace ActionEaseKit\Base\Service;
 
 use Enqueue\Client\ProducerInterface;
 use Psr\Log\LoggerInterface;
-use StreakSymfony\Base\Traits\ClassNameTrait;
+use ActionEaseKit\Base\Traits\ClassNameTrait;
 
 class RabbitProducerService
 {

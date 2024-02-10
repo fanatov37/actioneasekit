@@ -1,5 +1,5 @@
 <?php
-namespace StreakSymfony\Base\Exception;
+namespace ActionEaseKit\Base\Exception;
 /*
  * 402 Payment Required
  * Reserved for future use. The original intention was that this code might be used as part of some

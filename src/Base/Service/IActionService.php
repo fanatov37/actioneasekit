@@ -1,6 +1,6 @@
 <?php
 
-namespace StreakSymfony\Base\Service;
+namespace ActionEaseKit\Base\Service;
 
 use Symfony\Component\HttpFoundation\Request;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace StreakSymfony\Base\Entity\Traits;
+namespace ActionEaseKit\Base\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
