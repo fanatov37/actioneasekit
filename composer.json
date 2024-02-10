@@ -16,7 +16,7 @@
         "doctrine/orm": "^2.12",
         "friendsofsymfony/rest-bundle": "^3.1",
         "guzzlehttp/guzzle": "^6.2",
-        "jms/serializer-bundle": "^3.8",
+        "jms/serializer-bundle": "^5.3",
         "lazyjsonmapper/lazyjsonmapper": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "psr/log": "^1.0",

@@ -39,6 +39,6 @@ class RunControllerCommand extends Command
         $output->writeln("Status=>{$result->getStatusCode()}");
         $output->writeln("Result=>{$result->getContent()}");
 
-        return 1;
+        return self::SUCCESS;
     }
 }
