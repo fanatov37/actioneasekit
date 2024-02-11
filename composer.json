@@ -1,13 +1,15 @@
 {
     "name": "fanatov37/actioneasekit",
-    "type": "project",
-    "description": "Stored Programs and Views in MySql for ZF2 or ZF3",
+    "type": "symfony-bundle",
+    "description": "ActionEaseKit is a Symfony library designed for rapidly creating actions and providing convenient services for developers",
     "keywords": [
         "actioneasekit",
         "fanatov37",
         "symfony",
         "symfony action ease kit",
-        "symfony ease"
+        "symfony ease",
+        "symfony bundle"
+
     ],
     "license": "MIT",
     "authors": [
