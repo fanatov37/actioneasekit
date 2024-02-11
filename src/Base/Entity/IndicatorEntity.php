@@ -71,7 +71,7 @@ class IndicatorEntity
             $this->checkIndicator($objectPath, $propertyName);
         }
 
-        $result = self::get($this->{$propertyName}, $objectPath, $default);
+        $result = self::get((array)$this->{$propertyName}, $objectPath, $default);
 
         return $result;
     }
