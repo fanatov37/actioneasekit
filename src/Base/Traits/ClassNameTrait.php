@@ -6,7 +6,7 @@ trait ClassNameTrait
 {
     public function getClassName(): string
     {
-        $result = explode('\\', $this::class);
+        $result = explode('\\', static::class);
 
         return end($result);
     }

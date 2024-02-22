@@ -33,35 +33,38 @@ class AbstractRequestController extends AbstractFOSRestController
             $content = $this->resolveArguments($request->request->all());
 
             if ($this instanceof ILoggerController) {
-                $this->getLogger()->info($this::class, $content);
+                $this->getLogger()->info(static::class, $content);
             }
 
-            $service = $content[$this::SERVICE_ARGUMENT_NAME];
-            $actionService = $this->actionServices[$service] ?? throw new App404Exception("Action {$service} not exist");
+            $service = $content[static::SERVICE_ARGUMENT_NAME];
+            $actionService = $this->actionServices[$service] ?? throw new App404Exception("Action $service not exist");
             $actionService->setRequest($request);
 
-            if ($content[$this::ARGUMENT_NAME] && $actionService instanceof ValidationInterface) {
+            if ($content[static::ARGUMENT_NAME] && $actionService instanceof ValidationInterface) {
                 $validation = $actionService->getValidationClass();
 
                 if (!is_object($validation)) {
                     $validation = new $validation();
                 }
 
-                $validationResult = call_user_func_array([$validation, $content[$this::ACTION_ARGUMENT_NAME] . ValidationInterface::POSTFIXUS], array_values($content[$this::ARGUMENT_NAME]));
+                $validationResult = call_user_func_array([
+                    $validation, $content[static::ACTION_ARGUMENT_NAME] . ValidationInterface::POSTFIXUS],
+                    array_values($content[static::ARGUMENT_NAME])
+                );
 
                 if (is_array($validationResult)) {
-                    $content[$this::ARGUMENT_NAME] = [];
-                    $content[$this::ARGUMENT_NAME][] = $validationResult;
+                    $content[static::ARGUMENT_NAME] = [];
+                    $content[static::ARGUMENT_NAME][] = $validationResult;
                 }
             }
 
-            $actionMethodName = $content[$this::ACTION_ARGUMENT_NAME];
+            $actionMethodName = $content[static::ACTION_ARGUMENT_NAME];
 
             if ($actionService instanceof IRoleIAction && !$actionService->checkRoleAccessToAction($actionMethodName)) {
                 throw new App404Exception('Not access to action');
             }
 
-            $responseData = call_user_func_array([$actionService, $actionMethodName], array_values($content[$this::ARGUMENT_NAME]));
+            $responseData = call_user_func_array([$actionService, $actionMethodName], array_values($content[static::ARGUMENT_NAME]));
 
             return new JsonResponse($responseData);
 
@@ -74,18 +77,16 @@ class AbstractRequestController extends AbstractFOSRestController
 
     private function resolveArguments(array $arguments): array
     {
-        $resolver = (new OptionsResolver())
-            ->setRequired([$this::SERVICE_ARGUMENT_NAME, $this::ACTION_ARGUMENT_NAME])
-            ->setDefined([$this::ARGUMENT_NAME])
+        return (new OptionsResolver())
+            ->setRequired([static::SERVICE_ARGUMENT_NAME, static::ACTION_ARGUMENT_NAME])
+            ->setDefined([static::ARGUMENT_NAME])
 
-            ->setAllowedTypes($this::SERVICE_ARGUMENT_NAME, 'string')
-            ->setAllowedTypes($this::ACTION_ARGUMENT_NAME, 'string')
-            ->setAllowedTypes($this::ARGUMENT_NAME, 'array')
+            ->setAllowedTypes(static::SERVICE_ARGUMENT_NAME, 'string')
+            ->setAllowedTypes(static::ACTION_ARGUMENT_NAME, 'string')
+            ->setAllowedTypes(static::ARGUMENT_NAME, 'array')
 
-            ->setDefault($this::ARGUMENT_NAME, []);
+            ->setDefault(static::ARGUMENT_NAME, [])
 
-        $arguments = $resolver->resolve($arguments);
-
-        return $arguments;
+            ->resolve($arguments);
     }
 }

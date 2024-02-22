@@ -2,7 +2,6 @@
 
 namespace ActionEaseKit\Base\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 /**
  * This class for quick get,set data for json columns. Just extend this class.
  *
@@ -16,80 +15,95 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class IndicatorEntity
 {
-    public const DEFAULT_PROPERTY_NAME = 'data';
+    const DEFAULT_PROPERTY_NAME = 'data';
 
-    /** @ORM\Column(name="data", type="json", nullable=true, options={"jsonb": true}) */
-    protected $data = [];
+    protected string $currentPropertyName = self::DEFAULT_PROPERTY_NAME;
 
-    public function setData(array $data): self
+    protected function setCurrentPropertyName(string $propertyName) : void
     {
-        $this->data = $data;
+        if (!property_exists($this, $propertyName)) {
+            throw new \Exception("Property {$propertyName} does not exist");
+        }
+
+        $this->currentPropertyName = $propertyName;
+    }
+
+    /** full set json to current property without check */
+    final public function setFull(array $data): self
+    {
+        $this->{$this->currentPropertyName} = $data;
+
         return $this;
     }
 
-    public function getData(): array
+    final public function getFull(): array
     {
-        return $this->data;
+        return $this->{$this->currentPropertyName};
     }
 
-    public function setIndicator(
+    /**
+     * $objectPath can be like array ['path1', 'path2'] or string path1:path2
+     */
+    final public function setIndicator(
         string|array $objectPath,
         mixed $value,
         bool $skipCheckObjectPath=false,
-        string $propertyName = self::DEFAULT_PROPERTY_NAME
     ) : self
     {
-        $this->checkProperty($propertyName);
+        $this->checkProperty();
 
         if (is_array($objectPath)) {
             $objectPath = implode(':', $objectPath);
         }
 
         if (!$skipCheckObjectPath) {
-            $this->checkIndicator($objectPath, $propertyName);
+            $this->checkIndicator($objectPath);
         }
 
-        self::set($this->{$propertyName}, $objectPath, $value);
+        self::set($this->{$this->currentPropertyName}, $objectPath, $value);
 
         return $this;
     }
 
-    public function getIndicator(
+    /**
+     * $objectPath can be like array ['path1', 'path2'] or string path1:path2
+     */
+    final public function getIndicator(
         string|array $objectPath,
         mixed $default = null,
         bool $skipCheckObjectPath=false,
-        string $propertyName = self::DEFAULT_PROPERTY_NAME
     ) : mixed
     {
-        $this->checkProperty($propertyName);
+        $this->checkProperty();
 
         if (is_array($objectPath)) {
             $objectPath = implode(':', $objectPath);
         }
 
         if (!$skipCheckObjectPath) {
-            $this->checkIndicator($objectPath, $propertyName);
+            $this->checkIndicator($objectPath);
         }
 
-        $result = self::get((array)$this->{$propertyName}, $objectPath, $default);
+        $result = self::get((array)$this->{$this->currentPropertyName}, $objectPath, $default);
 
         return $result;
     }
 
-    protected function checkProperty(string $propertyName)
+    private function checkProperty() : void
     {
-        isset($this->{$propertyName}) ?? throw new \Exception("Property {$propertyName} not exists");
+        isset($this->{$this->currentPropertyName}) ??
+            throw new \Exception("Property {$this->currentPropertyName} not exists");
     }
 
-    protected function checkIndicator(string $objectPath, string $propertyName)
+    private function checkIndicator(string $objectPath) : void
     {
-        $indicatorConstName = $this::class . '::INDICATOR_' . strtoupper($propertyName);
+        $indicatorConstName = static::class . '::INDICATOR_' . strtoupper($this->currentPropertyName);
         defined($indicatorConstName) ?? throw new \Exception("Indicator not exists");
 
         $indicators = constant($indicatorConstName);
 
         if (!in_array($objectPath, self::arrayToColumn($indicators))) {
-            throw new \Exception("Property {$objectPath} is not accepted for entity " . $this::class);
+            throw new \Exception("Property {$objectPath} is not accepted for entity " . static::class);
         }
     }
 
@@ -133,7 +147,7 @@ class IndicatorEntity
         return $array;
     }
 
-    protected static function set(&$array, $key, $value)
+    protected static function set(&$array, $key, $value) : void
     {
         $keys = explode(':', $key);
         while (count($keys) > 1) {

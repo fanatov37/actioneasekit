@@ -9,7 +9,7 @@ abstract class AppServiceEntityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        $entityClass = str_replace('Repository', 'Entity', substr($this::class, 0, -10));
+        $entityClass = str_replace('Repository', 'Entity', substr(static::class, 0, -10));
 
         parent::__construct($registry, $entityClass);
     }

@@ -17,7 +17,7 @@ abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterf
 {
     use ClassNameTrait;
 
-    public const AVAILABLE_PRODUCERS = ['default'];
+    const AVAILABLE_PRODUCERS = ['default'];
 
     public function __construct(
         private RunCustomCommandService $runCustomCommandService,
