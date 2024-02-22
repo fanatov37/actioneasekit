@@ -1,0 +1,14 @@
+services:
+  ActionEaseKit\Base\Service\CurlService:
+    class: ActionEaseKit\Base\Service\CurlService
+
+  ActionEaseKit\Base\Service\RunCustomCommandService:
+    class: ActionEaseKit\Base\Service\RunCustomCommandService
+    arguments:
+      - "@kernel"
+
+  ActionEaseKit\Base\Service\RabbitProducerService:
+    class: ActionEaseKit\Base\Service\RabbitProducerService
+    arguments:
+      - '@Enqueue\Client\ProducerInterface'
+      - "@monolog.logger"
