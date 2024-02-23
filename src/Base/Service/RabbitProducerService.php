@@ -23,7 +23,7 @@ class RabbitProducerService
     public function __construct(private ProducerInterface $producer, private LoggerInterface $logger)
     {}
 
-    public function sendCommand (string $command, $message, bool $needReply = false)
+    public function sendCommand (string $command, $message, bool $needReply = false) : void
     {
         while ($this->maxTryCount) {
             try {

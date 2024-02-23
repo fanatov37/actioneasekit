@@ -44,7 +44,7 @@ class ProcessService
         return $this;
     }
 
-    private function logException(\Exception $exception)
+    private function logException(\Exception $exception) : void
     {
         if ($this->logger) {
             $message = sprintf(
@@ -63,7 +63,7 @@ class ProcessService
         }
     }
 
-    public function execute()
+    public function execute() : bool
     {
         gc_enable();
 

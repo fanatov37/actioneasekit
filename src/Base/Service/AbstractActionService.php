@@ -11,7 +11,7 @@ abstract class AbstractActionService implements IActionService
 
     protected $request;
 
-    public function setRequest(Request $request)
+    public function setRequest(Request $request) : void
     {
         $this->request = $request;
     }

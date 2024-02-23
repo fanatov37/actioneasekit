@@ -12,7 +12,7 @@ trait ReflectionHelperTrait
         return $reflection->getValue($object);
     }
 
-    public function invokeSetProperty(&$object, string $propertyName, $value)
+    public function invokeSetProperty(&$object, string $propertyName, $value) : void
     {
         $reflection = new \ReflectionProperty($object::class, $propertyName);
         $reflection->setAccessible(true);

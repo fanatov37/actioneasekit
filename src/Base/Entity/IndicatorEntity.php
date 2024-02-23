@@ -19,17 +19,19 @@ class IndicatorEntity
 
     protected string $currentPropertyName = self::DEFAULT_PROPERTY_NAME;
 
-    protected function setCurrentPropertyName(string $propertyName) : void
+    final public function setCurrentPropertyName(string $propertyName) : static
     {
         if (!property_exists($this, $propertyName)) {
             throw new \Exception("Property {$propertyName} does not exist");
         }
 
         $this->currentPropertyName = $propertyName;
+
+        return $this;
     }
 
     /** full set json to current property without check */
-    final public function setFull(array $data): self
+    final public function setFull(array $data): static
     {
         $this->{$this->currentPropertyName} = $data;
 
@@ -48,7 +50,7 @@ class IndicatorEntity
         string|array $objectPath,
         mixed $value,
         bool $skipCheckObjectPath=false,
-    ) : self
+    ) : static
     {
         $this->checkProperty();
 

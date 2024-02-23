@@ -29,7 +29,7 @@ abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterf
      *  return self::REJECT; // when the message is broken
      *  return self::REQUEUE; // the message is fine but you want to postpone processing
      */
-    public function process(Message $message, Context $context)
+    public function process(Message $message, Context $context) : object|string
     {
         try {
             $body = JSON::decode($message->getBody());
@@ -68,7 +68,7 @@ abstract class AbstractCmdConsumer implements Processor, CommandSubscriberInterf
         return self::ACK;
     }
 
-    public static function getSubscribedCommand()
+    public static function getSubscribedCommand() :array
     {
         $commands = [];
 

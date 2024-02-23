@@ -25,7 +25,7 @@ class RunControllerCommand extends Command
             ->addOption('request', mode: InputOption::VALUE_REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         $controller = $input->getOption('controller');
         $requestData = json_decode($input->getOption('request'), true) ?? [];
