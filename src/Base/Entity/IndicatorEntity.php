@@ -40,7 +40,7 @@ class IndicatorEntity
 
     final public function getFull(): array
     {
-        return $this->{$this->currentPropertyName};
+        return (array)$this->{$this->currentPropertyName};
     }
 
     /**
