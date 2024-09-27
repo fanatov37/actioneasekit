@@ -34,3 +34,5 @@ var/*
 vendor/*
 .env
 .env.local
+
+Makefile
