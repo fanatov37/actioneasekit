@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Service;
 
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
 trait CreatedTrait
 {
-    /**
-     * @ORM\Column(name="created", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: "created", type: "datetime", nullable: false)]
+
     protected \DateTime $created;
 
     public function __construct()

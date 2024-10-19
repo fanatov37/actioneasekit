@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Exception;
 /*
  * 401 Unauthorized (RFC 7235)

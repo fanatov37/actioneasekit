@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Command;
 
 use ActionEaseKit\Kernel;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\HttpFoundation\Request;
 
-class RunControllerCommand extends Command
+#[AsCommand(name: 'base:run:controller')]
+final class RunControllerCommand extends Command
 {
-    public static $defaultName = 'base:run:controller';
-
     public function __construct(private Kernel $kernel)
     {
         parent::__construct();
     }
 
     /** @codeCoverageIgnore */
-    protected function configure()
+    protected function configure() : void
     {
         $this->addOption('controller', mode: InputOption::VALUE_REQUIRED)
             ->addOption('request', mode: InputOption::VALUE_REQUIRED);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Service;
 
 use Symfony\Component\Process\Process;
@@ -9,7 +11,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Psr\Log\LoggerInterface;
 
-class ProcessService
+final class ProcessService
 {
     private $processLimit = 50;
     private int $delay = 5;

@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
 trait UpdatedTrait
 {
-    /**
-     * @ORM\Column(name="updated", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: "updated", type: "datetime", nullable: false)]
+
     protected \DateTime $updated;
 
     public function __construct()

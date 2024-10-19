@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Exception;
 /*
  * 404 Not Found The requested resource could not be found but may

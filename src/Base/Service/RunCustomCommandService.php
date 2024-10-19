@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * This service allows running custom console commands programmatically.
  */
-class RunCustomCommandService
+final class RunCustomCommandService
 {
     public function __construct(private KernelInterface $kernel)
     {}

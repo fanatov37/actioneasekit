@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Exception;
 /*
  * 500 Internal Server Error

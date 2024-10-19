@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Service;
 
 use ActionEaseKit\Base\Exception\App404Exception;
 use ActionEaseKit\Base\Exception\CurlResponseException;
 
-class CurlService
+final class CurlService
 {
     public function postJson(string $url, array $data=[], array $options = [], string $proxy='', int $timeout = 300) : array
     {

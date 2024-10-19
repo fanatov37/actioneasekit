@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Exception;
 /*
  * 403 Forbidden The request was valid, but the server is refusing action.

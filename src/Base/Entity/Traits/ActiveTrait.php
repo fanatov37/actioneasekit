@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActionEaseKit\Base\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
 trait ActiveTrait
 {
-    /**
-     * @ORM\Column(name="active", type="boolean", options={"default" : true})
-     */
+    #[ORM\Column(name: "active", type: "boolean", options: ["default" => true])]
+
     protected bool $active;
 
     public function setActive(bool $active) : self
