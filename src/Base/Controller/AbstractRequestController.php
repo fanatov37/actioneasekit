@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace ActionEaseKit\Base\Controller;
 
 use ActionEaseKit\Base\Exception\App404Exception;
+use ActionEaseKit\Base\Exception\AppExceptionInterface;
+use ActionEaseKit\Base\Exception\HelperException;
 use ActionEaseKit\Base\Service\IActionService;
 use ActionEaseKit\Base\Service\IRoleIAction;
 use ActionEaseKit\Base\Service\ValidationInterface;
-use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AbstractRequestController extends AbstractFOSRestController
+class AbstractRequestController extends AbstractController
 {
     protected const SERVICE_ARGUMENT_NAME = 'service';
     protected const ACTION_ARGUMENT_NAME = 'action';
@@ -32,7 +34,8 @@ class AbstractRequestController extends AbstractFOSRestController
     public function indexAction(Request $request): JsonResponse
     {
         try {
-            $content = $this->resolveArguments($request->request->all());
+            $data = json_decode($request->getContent(), true);
+            $content = $this->resolveArguments($data);
 
             if ($this instanceof ILoggerController) {
                 $this->getLogger()->info(static::class, $content);
@@ -70,10 +73,11 @@ class AbstractRequestController extends AbstractFOSRestController
 
             return new JsonResponse($responseData);
 
-        } catch (MissingOptionsException $exception) {
-            throw new App404Exception($exception->getMessage());
+        } catch (AppExceptionInterface $exception) {
+            return new JsonResponse(HelperException::getFullInfo($exception), $exception->getHttpCode());
+
         } catch (\Throwable $exception) {
-            throw new App404Exception($exception->getMessage());
+            return new JsonResponse(HelperException::getFullInfo($exception), Response::HTTP_NOT_FOUND);
         }
     }
 

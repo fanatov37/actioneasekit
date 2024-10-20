@@ -27,6 +27,7 @@ symfony.lock
 bin/*
 config/*
 docker/*
+migrations/*
 public/*
 src/*
 !/src/Base
@@ -36,3 +37,14 @@ vendor/*
 .env.local
 
 Makefile
+
+###> php-cs-fixer/shim ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< php-cs-fixer/shim ###
+
+.php-cs-fixer.dist.php
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

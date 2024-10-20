@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 namespace ActionEaseKit\Base\Exception;
+
+use Symfony\Component\HttpFoundation\Response;
+
 /*
  * 401 Unauthorized (RFC 7235)
  * Similar to 403 Forbidden, but specifically for use when authentication is
@@ -14,4 +17,10 @@ namespace ActionEaseKit\Base\Exception;
  * from the website (usually the website domain) and that specific address is refused permission to access a website.
  *
  */
-class App401Exception extends \Exception {}
+class App401Exception extends \Exception implements AppExceptionInterface
+{
+    public function getHttpCode(): int
+    {
+        return Response::HTTP_UNAUTHORIZED;
+    }
+}

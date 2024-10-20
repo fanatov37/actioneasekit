@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 namespace ActionEaseKit\Base\Exception;
+
+use Symfony\Component\HttpFoundation\Response;
+
 /*
  * 402 Payment Required
  * Reserved for future use. The original intention was that this code might be used as part of some
@@ -13,4 +16,10 @@ namespace ActionEaseKit\Base\Exception;
  * Shopify uses this code when the store has not paid their fees and is temporarily disabled. [39]
  *
  */
-class App402Exception extends \Exception {}
+class App402Exception extends \Exception implements AppExceptionInterface
+{
+    public function getHttpCode(): int
+    {
+        return Response::HTTP_PAYMENT_REQUIRED;
+    }
+}
