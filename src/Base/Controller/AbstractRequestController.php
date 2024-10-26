@@ -40,10 +40,6 @@ class AbstractRequestController extends AbstractController
             $data = json_decode($request->getContent(), true);
             $content = $this->resolveArguments($data);
 
-            if ($this instanceof ILoggerController) {
-                $this->getLogger()->info(static::class, $content);
-            }
-
             $service = $content[static::SERVICE_ARGUMENT_NAME];
             $actionService = $this->actionServices[$service] ?? throw new App404Exception("Action $service not exist");
             $actionService->setRequest($request);
