@@ -118,6 +118,17 @@ Here’s how you can send a POST request to trigger your actions:
 }
 ```
 
+Curl Example
+```
+curl -X POST http://localhost/api/request \
+-H "Content-Type: application/json" \
+-d '{
+    "service": "RequestService",
+    "action": "firstAction",
+    "arguments": [{"id": 1, "name": "myName"}]
+}'
+```
+
 
 
 ## Example of Usage: IndicatorEntity (Quick Data Access from JSON Columns)
