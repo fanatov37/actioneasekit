@@ -7,14 +7,15 @@ namespace ActionEaseKit\Base\Controller;
 use ActionEaseKit\Base\Exception\App404Exception;
 use ActionEaseKit\Base\Exception\AppExceptionInterface;
 use ActionEaseKit\Base\Exception\HelperException;
-use ActionEaseKit\Base\Service\IActionService;
-use ActionEaseKit\Base\Service\IRoleIAction;
+use ActionEaseKit\Base\Service\AbstractActionService;
+use ActionEaseKit\Base\Service\ActionServiceInterface;
 use ActionEaseKit\Base\Service\ValidationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AbstractRequestController extends AbstractController
 {
@@ -22,15 +23,17 @@ class AbstractRequestController extends AbstractController
     protected const ACTION_ARGUMENT_NAME = 'action';
     protected const ARGUMENT_NAME = 'arguments';
 
+    /** @var array|AbstractActionService[]  */
     private array $actionServices = [];
 
-    public function __construct(IActionService ...$actionServices)
+    public function __construct(ActionServiceInterface ...$actionServices)
     {
         foreach ($actionServices as $actionService) {
             $this->actionServices[$actionService->getClassName()] = $actionService;
         }
     }
 
+    #[Route(name: 'index', methods: ['POST'])]
     public function indexAction(Request $request): JsonResponse
     {
         try {
@@ -65,10 +68,7 @@ class AbstractRequestController extends AbstractController
 
             $actionMethodName = $content[static::ACTION_ARGUMENT_NAME];
 
-            if ($actionService instanceof IRoleIAction && !$actionService->checkRoleAccessToAction($actionMethodName)) {
-                throw new App404Exception('Not access to action');
-            }
-
+            $actionService->checkAccess($actionMethodName);
             $responseData = call_user_func_array([$actionService, $actionMethodName], array_values($content[static::ARGUMENT_NAME]));
 
             return new JsonResponse($responseData);

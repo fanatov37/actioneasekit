@@ -29,4 +29,32 @@ trait ReflectionHelperTrait
 
         return $method->invokeArgs($object, $parameters);
     }
+
+    public function getClassAttributes() : array
+    {
+        $reflectionClass = new \ReflectionClass(static::class);
+        $attributes = $reflectionClass->getAttributes();
+
+        return $attributes;
+    }
+
+    public function getFunctionAttributes(string $action, ?string $name = null): array|\ReflectionAttribute
+    {
+        if (!method_exists(static::class, $action)) {
+            throw new \InvalidArgumentException("Method $action does not exist in " . static::class);
+        }
+
+        $reflectionMethod = new \ReflectionMethod(static::class, $action);
+        $attributes = $reflectionMethod->getAttributes($name);
+
+        return $name ? ($attributes[0] ?? []) : $attributes;
+    }
+
+    public function getVariableAttributes(string $property) : array
+    {
+        $reflectionProperty = new \ReflectionProperty(static::class, $property);
+        $attributes = $reflectionProperty->getAttributes();
+
+        return $attributes;
+    }
 }
