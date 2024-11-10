@@ -3,7 +3,7 @@
 namespace ActionEaseKit\Base\Attribute;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-class RequiresRole
+class RequiresRoleAttribute
 {
     public function __construct(private readonly array $roles)
     {

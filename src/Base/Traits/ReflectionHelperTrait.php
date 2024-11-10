@@ -30,12 +30,12 @@ trait ReflectionHelperTrait
         return $method->invokeArgs($object, $parameters);
     }
 
-    public function getClassAttributes() : array
+    public function getClassAttributes(?string $name = null) : array|\ReflectionAttribute
     {
         $reflectionClass = new \ReflectionClass(static::class);
-        $attributes = $reflectionClass->getAttributes();
+        $attributes = $reflectionClass->getAttributes($name);
 
-        return $attributes;
+        return $name ? ($attributes[0] ?? []) : $attributes;
     }
 
     public function getFunctionAttributes(string $action, ?string $name = null): array|\ReflectionAttribute

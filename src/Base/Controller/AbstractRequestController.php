@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ActionEaseKit\Base\Controller;
 
+use ActionEaseKit\Base\Attribute\ValidationAttribute;
 use ActionEaseKit\Base\Exception\App404Exception;
 use ActionEaseKit\Base\Exception\AppExceptionInterface;
 use ActionEaseKit\Base\Exception\HelperException;
 use ActionEaseKit\Base\Service\AbstractActionService;
 use ActionEaseKit\Base\Service\ActionServiceInterface;
-use ActionEaseKit\Base\Service\ValidationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,9 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AbstractRequestController extends AbstractController
 {
-    protected const SERVICE_ARGUMENT_NAME = 'service';
-    protected const ACTION_ARGUMENT_NAME = 'action';
-    protected const ARGUMENT_NAME = 'arguments';
+    protected const SERVICE_KEY = 'service';
+    protected const ACTION_KEY = 'action';
+    protected const ARGUMENT_KEY = 'arguments';
 
     /** @var array|AbstractActionService[]  */
     private array $actionServices = [];
@@ -40,32 +40,17 @@ class AbstractRequestController extends AbstractController
             $data = json_decode($request->getContent(), true);
             $content = $this->resolveArguments($data);
 
-            $service = $content[static::SERVICE_ARGUMENT_NAME];
+            $service = $content[static::SERVICE_KEY];
+            $actionMethodName = $content[static::ACTION_KEY];
+            $arguments = $content[static::ARGUMENT_KEY];
+
             $actionService = $this->actionServices[$service] ?? throw new App404Exception("Action $service not exist");
             $actionService->setRequest($request);
 
-            if ($content[static::ARGUMENT_NAME] && $actionService instanceof ValidationInterface) {
-                $validation = $actionService->getValidationClass();
-
-                if (!is_object($validation)) {
-                    $validation = new $validation();
-                }
-
-                $validationResult = call_user_func_array([
-                    $validation, $content[static::ACTION_ARGUMENT_NAME] . ValidationInterface::POSTFIXUS],
-                    array_values($content[static::ARGUMENT_NAME])
-                );
-
-                if (is_array($validationResult)) {
-                    $content[static::ARGUMENT_NAME] = [];
-                    $content[static::ARGUMENT_NAME][] = $validationResult;
-                }
-            }
-
-            $actionMethodName = $content[static::ACTION_ARGUMENT_NAME];
+            $arguments = $actionService->checkValidation($actionMethodName, $arguments);
 
             $actionService->checkAccess($actionMethodName);
-            $responseData = call_user_func_array([$actionService, $actionMethodName], array_values($content[static::ARGUMENT_NAME]));
+            $responseData = call_user_func_array([$actionService, $actionMethodName], array_values($arguments));
 
             return new JsonResponse($responseData);
 
@@ -80,14 +65,14 @@ class AbstractRequestController extends AbstractController
     private function resolveArguments(array $arguments): array
     {
         return (new OptionsResolver())
-            ->setRequired([static::SERVICE_ARGUMENT_NAME, static::ACTION_ARGUMENT_NAME])
-            ->setDefined([static::ARGUMENT_NAME])
+            ->setRequired([static::SERVICE_KEY, static::ACTION_KEY])
+            ->setDefined([static::ARGUMENT_KEY])
 
-            ->setAllowedTypes(static::SERVICE_ARGUMENT_NAME, 'string')
-            ->setAllowedTypes(static::ACTION_ARGUMENT_NAME, 'string')
-            ->setAllowedTypes(static::ARGUMENT_NAME, 'array')
+            ->setAllowedTypes(static::SERVICE_KEY, 'string')
+            ->setAllowedTypes(static::ACTION_KEY, 'string')
+            ->setAllowedTypes(static::ARGUMENT_KEY, 'array')
 
-            ->setDefault(static::ARGUMENT_NAME, [])
+            ->setDefault(static::ARGUMENT_KEY, [])
 
             ->resolve($arguments);
     }

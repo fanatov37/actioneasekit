@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace ActionEaseKit\Base\Service;
 
-use ActionEaseKit\Base\Attribute\RequiresRole;
+use ActionEaseKit\Base\Attribute\RequiresRoleAttribute;
+use ActionEaseKit\Base\Attribute\ValidationAttribute;
 use ActionEaseKit\Base\Exception\App403Exception;
 use ActionEaseKit\Base\Traits\ClassNameTrait;
 use ActionEaseKit\Base\Traits\ReflectionHelperTrait;
@@ -30,7 +31,7 @@ abstract class AbstractActionService implements ActionServiceInterface
 
     public function checkAccess(string $action): void
     {
-        $attribute = $this->getFunctionAttributes($action, RequiresRole::class);
+        $attribute = $this->getFunctionAttributes($action, RequiresRoleAttribute::class);
 
         if (!$attribute) return;
 
@@ -51,5 +52,34 @@ abstract class AbstractActionService implements ActionServiceInterface
         }
 
         return null;
+    }
+
+    public function checkValidation(string $action, array $arguments) : array
+    {
+        $validationAttribute = $this->getClassAttributes(ValidationAttribute::class);
+
+        if ($arguments && $validationAttribute) {
+
+            /** @var ValidationAttribute $validationAttributeInstance */
+            $validationAttributeInstance = $validationAttribute->newInstance();
+            $validationClassName = new $validationAttributeInstance->validationClass();
+            $validationClass = new $validationClassName();
+
+            $validationMethod = $action . ValidationAttribute::POSTFIXUS;
+
+            if (method_exists($validationClass, $validationMethod)) {
+                $validationResult = call_user_func_array([
+                    $validationClass, $action . ValidationAttribute::POSTFIXUS],
+                    array_values($arguments)
+                );
+
+                if (is_array($validationResult)) {
+                    $arguments = [];
+                    $arguments[] = $validationResult;
+                }
+            }
+        }
+
+        return $arguments;
     }
 }
